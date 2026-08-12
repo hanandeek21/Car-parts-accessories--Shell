@@ -11,7 +11,7 @@ This project acts as the **Application Shell** for Group 14's E-Commerce store. 
 
 ## Architecture
 - **Integration Method:** Iframes-based Microfrontend architecture.
-- **Deployment:** Vercel.
+- **Deployment:** Vercel, Netlify, etc.
 
 ## Live Application
 [Click here to view the Live Application](PUT_YOUR_VERCEL_LINK_HERE)
