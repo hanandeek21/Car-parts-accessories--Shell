@@ -96,6 +96,24 @@ window.addEventListener('message', (event) => {
   if (!message || typeof message !== 'object') return
 
   if (
+    event.origin === ORIGINS.catalog &&
+    message.source === 'catalog' &&
+    message.type === 'catalog:request-wishlist-state'
+  ) {
+    sendToFrame('account', 'shell:request-wishlist-state')
+    return
+  }
+
+  if (
+    event.origin === ORIGINS.account &&
+    message.source === 'account' &&
+    message.type === 'account:wishlist-state'
+  ) {
+    sendToFrame('catalog', 'shell:wishlist-state', message.detail)
+    return
+  }
+
+  if (
     event.origin === ORIGINS.account &&
     message.source === 'account' &&
     message.type === 'account:wishlist-item-removed'
@@ -132,7 +150,13 @@ window.addEventListener('message', (event) => {
     message.type === 'catalog:toggle-wishlist'
   ) {
     sendToFrame('account', 'shell:toggle-wishlist', message.detail)
-    showToast('Added to Wishlist')
+
+    showToast(
+      message.detail?.action === 'remove'
+        ? 'Removed from Wishlist.'
+        : 'Added to Wishlist.'
+    )
+
     return
   }
 
