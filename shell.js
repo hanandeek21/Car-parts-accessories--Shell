@@ -5,6 +5,7 @@ const ORIGINS = {
 }
 
 const pendingMessages = {
+  catalog: [],
   cart: [],
   account: []
 }
@@ -75,6 +76,7 @@ function registerFrame(frameName) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  registerFrame('catalog')
   registerFrame('cart')
   registerFrame('account')
 
@@ -94,6 +96,26 @@ window.addEventListener('message', (event) => {
   if (!message || typeof message !== 'object') return
 
   if (
+    event.origin === ORIGINS.account &&
+    message.source === 'account' &&
+    message.type === 'account:wishlist-item-removed'
+  ) {
+    sendToFrame('catalog', 'shell:wishlist-item-removed', message.detail)
+    showToast('Wishlist item removed.')
+    return
+  }
+
+  if (
+    event.origin === ORIGINS.account &&
+    message.source === 'account' &&
+    message.type === 'account:wishlist-cleared'
+  ) {
+    sendToFrame('catalog', 'shell:wishlist-cleared', message.detail)
+    showToast('Wishlist cleared.')
+    return
+  }
+
+  if (
     event.origin === ORIGINS.catalog &&
     message.source === 'catalog' &&
     message.type === 'catalog:add-to-cart'
@@ -110,7 +132,6 @@ window.addEventListener('message', (event) => {
     message.type === 'catalog:toggle-wishlist'
   ) {
     sendToFrame('account', 'shell:toggle-wishlist', message.detail)
-    openView('account')
     showToast('Wishlist request sent to Account.')
     return
   }
