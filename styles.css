@@ -1,0 +1,210 @@
+:root {
+  --ink: #172033;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --surface: #ffffff;
+  --background: #f8fafc;
+  --accent: #c97a7a;
+  --dark: #111827;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--ink);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+button {
+  font: inherit;
+}
+
+.app-header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px clamp(20px, 5vw, 72px);
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  color: var(--dark);
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+}
+
+.brand__icon,
+.brand span span {
+  color: var(--accent);
+}
+
+.app-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-button {
+  padding: 9px 13px;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.nav-button:hover,
+.nav-button.is-active {
+  color: var(--dark);
+  background: #f1f5f9;
+}
+
+.shell {
+  width: min(1400px, calc(100% - 40px));
+  margin: 36px auto 64px;
+}
+
+.shell__intro {
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.eyebrow,
+.microfrontend__eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.shell__intro h1,
+.microfrontend h2 {
+  margin: 0;
+  color: var(--dark);
+}
+
+.shell__intro h1 {
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  letter-spacing: -0.045em;
+}
+
+.shell__intro > p:last-child {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.microfrontend {
+  overflow: hidden;
+  margin-top: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+}
+
+.microfrontend.is-hidden {
+  display: none;
+}
+
+.microfrontend__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.microfrontend h2 {
+  font-size: 1.08rem;
+}
+
+.badge {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.badge--vue {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.badge--lit {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.badge--react {
+  color: #075985;
+  background: #e0f2fe;
+}
+
+iframe {
+  display: block;
+  width: 100%;
+  height: 820px;
+  border: 0;
+  background: #fff;
+}
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 20;
+  max-width: min(360px, calc(100vw - 40px));
+  padding: 13px 16px;
+  color: #fff;
+  background: var(--dark);
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 720px) {
+  .app-header,
+  .microfrontend__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .app-nav {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .shell {
+    width: min(100% - 24px, 1400px);
+    margin-top: 24px;
+  }
+
+  iframe {
+    height: 760px;
+  }
+}
