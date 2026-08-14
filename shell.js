@@ -132,7 +132,7 @@ window.addEventListener('message', (event) => {
     message.type === 'catalog:toggle-wishlist'
   ) {
     sendToFrame('account', 'shell:toggle-wishlist', message.detail)
-    showToast('Wishlist request sent to Account.')
+    showToast('Added to Wishlist')
     return
   }
 
