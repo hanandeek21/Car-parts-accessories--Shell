@@ -49,14 +49,18 @@ function sendToFrame(frameName, type, detail) {
 
   if (!frame || !targetOrigin) return
 
-  frame.contentWindow.postMessage(
-    {
-      source: 'shell',
-      type,
-      detail
-    },
-    targetOrigin
-  )
+  const message = {
+    source: 'shell',
+    type,
+    detail
+  }
+
+  if (frame.dataset.ready !== 'true') {
+    pendingMessages[frameName].push(message)
+    return
+  }
+
+  frame.contentWindow.postMessage(message, targetOrigin)
 }
 
 function flushPendingMessages(frameName) {
@@ -91,6 +95,7 @@ window.addEventListener('DOMContentLoaded', () => {
   })
 
   const requestedView = window.location.hash.replace('#', '')
+
   if (['catalog', 'cart', 'account'].includes(requestedView)) {
     openView(requestedView)
   }
@@ -145,8 +150,6 @@ window.addEventListener('message', (event) => {
     message.type === 'catalog:add-to-cart'
   ) {
     sendToFrame('cart', 'shell:add-to-cart', message.detail)
-
-    
     showToast('Added to Cart.')
     return
   }
@@ -163,6 +166,21 @@ window.addEventListener('message', (event) => {
         ? 'Removed from Wishlist.'
         : 'Added to Wishlist.'
     )
+
+    return
+  }
+
+  if (
+    event.origin === ORIGINS.cart &&
+    message.source === 'cart' &&
+    message.type === 'cart:ready'
+  ) {
+    const cartFrame = document.querySelector('#cart-frame')
+
+    if (cartFrame) {
+      cartFrame.dataset.ready = 'true'
+      flushPendingMessages('cart')
+    }
 
     return
   }
