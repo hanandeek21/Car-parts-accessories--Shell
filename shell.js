@@ -211,7 +211,7 @@ window.addEventListener('message', (event) => {
     message.type === 'account:move-to-cart'
   ) {
     sendToFrame('cart', 'shell:add-to-cart', message.detail)
-    openView('cart')
+  
     showToast('Wishlist item sent to Cart.')
   }
 })
