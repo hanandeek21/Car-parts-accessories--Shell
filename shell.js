@@ -49,18 +49,14 @@ function sendToFrame(frameName, type, detail) {
 
   if (!frame || !targetOrigin) return
 
-  const message = {
-    source: 'shell',
-    type,
-    detail
-  }
-
-  if (frame.dataset.ready !== 'true') {
-    pendingMessages[frameName].push(message)
-    return
-  }
-
-  frame.contentWindow.postMessage(message, targetOrigin)
+  frame.contentWindow.postMessage(
+    {
+      source: 'shell',
+      type,
+      detail
+    },
+    targetOrigin
+  )
 }
 
 function flushPendingMessages(frameName) {
