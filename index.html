@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./styles.css" />
   <script src="./shell.js" defer></script>
 </head>
+
 <body>
   <header class="app-header">
     <a class="brand" href="#catalog" aria-label="Open AutoParts catalog">
@@ -20,11 +21,14 @@
 
     <nav class="app-nav" aria-label="Microfrontend navigation">
       <button class="nav-button is-active" type="button" data-view="catalog">
-       Catalog & Discovery
+        Catalog & Discovery
       </button>
+
       <button class="nav-button" type="button" data-view="cart">
         Cart & Checkout
+        <span id="cart-count" class="cart-count" hidden>0</span>
       </button>
+
       <button class="nav-button" type="button" data-view="account">
         Account & Orders
       </button>
@@ -33,9 +37,7 @@
 
   <main class="shell">
     <section class="shell__intro">
-      
       <h1>Car Parts & Accessories Store</h1>
-    
     </section>
 
     <section class="microfrontend" id="catalog-panel" data-panel="catalog">

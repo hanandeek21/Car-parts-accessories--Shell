@@ -21,6 +21,16 @@ function showToast(message) {
   }, 3200)
 }
 
+function updateCartCount(count) {
+  const cartCount = document.querySelector('#cart-count')
+  if (!cartCount) return
+
+  const safeCount = Math.max(0, Number(count) || 0)
+
+  cartCount.textContent = safeCount
+  cartCount.hidden = safeCount === 0
+}
+
 function openView(viewName) {
   document.querySelectorAll('[data-panel]').forEach((panel) => {
     panel.classList.toggle('is-hidden', panel.dataset.panel !== viewName)
@@ -139,8 +149,9 @@ window.addEventListener('message', (event) => {
     message.type === 'catalog:add-to-cart'
   ) {
     sendToFrame('cart', 'shell:add-to-cart', message.detail)
-    openView('cart')
-    showToast('Product sent from Catalog to Cart.')
+
+    
+    showToast('Added to Cart.')
     return
   }
 
@@ -157,6 +168,15 @@ window.addEventListener('message', (event) => {
         : 'Added to Wishlist.'
     )
 
+    return
+  }
+
+  if (
+    event.origin === ORIGINS.cart &&
+    message.source === 'cart' &&
+    message.type === 'cart:item-count'
+  ) {
+    updateCartCount(message.detail?.count)
     return
   }
 
