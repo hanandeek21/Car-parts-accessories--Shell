@@ -1,6 +1,6 @@
 const ORIGINS = {
   catalog: 'https://carparts-catalog-vue.vercel.app',
-  cart: 'https://checkout-app-new.vercel.app/',
+  cart: 'https://checkout-app-new.vercel.app',
   account: 'https://e-commerce-microfrontend-account-or.vercel.app'
 }
 
@@ -28,6 +28,7 @@ function updateCartCount(count) {
   const safeCount = Math.max(0, Number(count) || 0)
 
   cartCount.textContent = safeCount
+  ذ
   cartCount.hidden = safeCount === 0
 }
 
