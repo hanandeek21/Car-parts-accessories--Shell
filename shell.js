@@ -1,6 +1,6 @@
 const ORIGINS = {
   catalog: 'https://carparts-catalog-vue.vercel.app',
- cart: 'https://checkout-app-vercel.vercel.app',
+  cart: 'https://checkout-app-vercel.vercel.app',
   account: 'https://e-commerce-microfrontend-account-or.vercel.app'
 }
 
@@ -197,6 +197,34 @@ window.addEventListener('message', (event) => {
   if (
     event.origin === ORIGINS.cart &&
     message.source === 'cart' &&
+    message.type === 'cart:request-checkout-access'
+  ) {
+    sendToFrame('account', 'shell:request-auth-status')
+    return
+  }
+
+  if (
+    event.origin === ORIGINS.account &&
+    message.source === 'account' &&
+    message.type === 'account:auth-status'
+  ) {
+    sendToFrame('cart', 'shell:checkout-auth-status', message.detail)
+    return
+  }
+
+  if (
+    event.origin === ORIGINS.cart &&
+    message.source === 'cart' &&
+    message.type === 'cart:sign-in-required'
+  ) {
+    openView('account')
+    showToast('Please sign in to continue checkout.')
+    return
+  }
+
+  if (
+    event.origin === ORIGINS.cart &&
+    message.source === 'cart' &&
     message.type === 'cart:order-placed'
   ) {
     sendToFrame('account', 'shell:order-placed', message.detail)
@@ -211,7 +239,6 @@ window.addEventListener('message', (event) => {
     message.type === 'account:move-to-cart'
   ) {
     sendToFrame('cart', 'shell:add-to-cart', message.detail)
-  
     showToast('Wishlist item sent to Cart.')
   }
 })
