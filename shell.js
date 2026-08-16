@@ -10,6 +10,8 @@ const pendingMessages = {
   account: []
 }
 
+let accountIsAuthenticated = false
+
 function showToast(message) {
   const toast = document.querySelector('#toast')
   toast.textContent = message
@@ -208,7 +210,9 @@ window.addEventListener('message', (event) => {
     message.source === 'cart' &&
     message.type === 'cart:request-checkout-access'
   ) {
-    sendToFrame('account', 'shell:request-auth-status')
+    sendToFrame('cart', 'shell:checkout-auth-status', {
+      isAuthenticated: accountIsAuthenticated
+    })
     return
   }
 
@@ -217,7 +221,7 @@ window.addEventListener('message', (event) => {
     message.source === 'account' &&
     message.type === 'account:auth-status'
   ) {
-    sendToFrame('cart', 'shell:checkout-auth-status', message.detail)
+    accountIsAuthenticated = Boolean(message.detail?.isAuthenticated)
     return
   }
 
