@@ -1,6 +1,6 @@
 const ORIGINS = {
   catalog: 'https://carparts-catalog-vue.vercel.app',
-  cart: 'https://checkout-app-vercel.vercel.app',
+  cart: 'https://checkout-app-new.vercel.app/',
   account: 'https://e-commerce-microfrontend-account-or.vercel.app'
 }
 
