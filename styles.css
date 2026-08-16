@@ -71,6 +71,22 @@ button {
   background: #f1f5f9;
 }
 
+.cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #ce7b7b;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
 .shell {
   width: min(1400px, calc(100% - 40px));
   margin: 36px auto 64px;
@@ -207,20 +223,4 @@ iframe {
   iframe {
     height: 760px;
   }
-
-  .cart-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 18px;
-  height: 18px;
-  margin-left: 6px;
-  padding: 0 5px;
-  border-radius: 999px;
-  background: #ce7b7b;
-  color: #ffffff;
-  font-size: 0.72rem;
-  font-weight: 800;
-  line-height: 1;
-}
 }

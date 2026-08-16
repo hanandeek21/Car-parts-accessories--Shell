@@ -28,8 +28,15 @@ function updateCartCount(count) {
   const safeCount = Math.max(0, Number(count) || 0)
 
   cartCount.textContent = safeCount
-  ذ
   cartCount.hidden = safeCount === 0
+}
+
+function increaseCartCount(quantity = 1) {
+  const cartCount = document.querySelector('#cart-count')
+  const currentCount = Number(cartCount?.textContent) || 0
+  const amount = Math.max(1, Number(quantity) || 1)
+
+  updateCartCount(currentCount + amount)
 }
 
 function openView(viewName) {
@@ -151,6 +158,7 @@ window.addEventListener('message', (event) => {
     message.type === 'catalog:add-to-cart'
   ) {
     sendToFrame('cart', 'shell:add-to-cart', message.detail)
+    increaseCartCount(message.detail?.product?.quantity)
     showToast('Added to Cart.')
     return
   }
@@ -240,6 +248,7 @@ window.addEventListener('message', (event) => {
     message.type === 'account:move-to-cart'
   ) {
     sendToFrame('cart', 'shell:add-to-cart', message.detail)
+    increaseCartCount(message.detail?.product?.quantity)
     showToast('Wishlist item sent to Cart.')
   }
 })
